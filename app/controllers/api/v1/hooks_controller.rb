@@ -14,7 +14,7 @@ class Api::V1::HooksController < Api::V1::ApiController
     if @hook.save
       render :show
     else
-      render_errors(@user.errors.full_messages)
+      render_errors(@hook.errors.full_messages)
     end
   end
 
@@ -22,7 +22,7 @@ class Api::V1::HooksController < Api::V1::ApiController
     if @hook.update(hook_params)
       render :show
     else
-      render_errors(@user.errors.full_messages)
+      render_errors(@hook.errors.full_messages)
     end
   end
 
@@ -30,7 +30,7 @@ class Api::V1::HooksController < Api::V1::ApiController
     if @hook.destroy
       render_done("destroy")
     else
-      render_errors(@user.errors.full_messages)
+      render_errors(@hook.errors.full_messages)
     end
   end
 
