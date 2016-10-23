@@ -1,5 +1,5 @@
 class Api::V1::PostsController < Api::V1::ApiController
-  before_action :set_post, only: [:show, :edit, :destroy]
+  before_action :set_post, only: [:show]
 
   def index
     @posts = filtering_parameters(params)
@@ -12,6 +12,8 @@ class Api::V1::PostsController < Api::V1::ApiController
     @post = Post.new(post_params)
 
     if @post.save
+      http = Curl.post(@post.hook.url, { message: @post.message })
+
       render :show
     else
       render_errors(@post.errors.full_messages)
@@ -26,7 +28,6 @@ class Api::V1::PostsController < Api::V1::ApiController
       render_errors(@post.errors.full_messages)
     end
   end
-=end
 
   def destroy
     if @post.destroy
@@ -35,6 +36,7 @@ class Api::V1::PostsController < Api::V1::ApiController
       render_errors(@post.errors.full_messages)
     end
   end
+=end
 
 private
 
