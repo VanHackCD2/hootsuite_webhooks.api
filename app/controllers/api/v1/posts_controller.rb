@@ -14,7 +14,6 @@ class Api::V1::PostsController < Api::V1::ApiController
     if @post.save
       Thread.start do
         #sleep(1.minutes)
-        
 
         Curl.post(@post.hook.url, { message: @post.message })
 
@@ -26,24 +25,6 @@ class Api::V1::PostsController < Api::V1::ApiController
       render_errors(@post.errors.full_messages)
     end
   end
-
-=begin
-  def update
-    if @post.update(post_params)
-      render :show
-    else
-      render_errors(@post.errors.full_messages)
-    end
-  end
-
-  def destroy
-    if @post.destroy
-      render_done("destroy")
-    else
-      render_errors(@post.errors.full_messages)
-    end
-  end
-=end
 
 private
 
