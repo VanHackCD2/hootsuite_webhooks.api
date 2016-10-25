@@ -14,6 +14,7 @@ class Api::V1::PostsController < Api::V1::ApiController
     if @post.save
       Thread.start do
         #sleep(1.minutes)
+        
 
         Curl.post(@post.hook.url, { message: @post.message })
 
