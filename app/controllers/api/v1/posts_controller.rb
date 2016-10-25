@@ -12,7 +12,13 @@ class Api::V1::PostsController < Api::V1::ApiController
     @post = Post.new(post_params)
 
     if @post.save
-      http = Curl.post(@post.hook.url, { message: @post.message })
+      Thread.start do
+        #sleep(1.minutes)
+
+        Curl.post(@post.hook.url, { message: @post.message })
+
+        ActiveRecord::Base.connection.close
+      end
 
       render :show
     else
@@ -49,7 +55,7 @@ private
   end
 
   def filtering_parameters(params)
-    posts = Post.all
+    posts = Post.all.order(updated_at: :desc)
 
     return posts if params["posts"].nil?
 
